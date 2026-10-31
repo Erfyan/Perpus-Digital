@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../lib/api';
 
 export default function Catalog() {
@@ -30,7 +31,7 @@ export default function Catalog() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {books.map((b) => (
           <div key={b.id} className="bg-white rounded-xl shadow p-4">
-            <p className="font-semibold">{b.title}</p>
+            <Link to={`/books/${b.id}`} className="font-semibold hover:underline">{b.title}</Link>
             <p className="text-xs text-gray-500">{b.category_name}</p>
             <p className="text-sm text-yellow-500">★ {b.rating}</p>
             <p className="text-xs">{b.book_type}</p>

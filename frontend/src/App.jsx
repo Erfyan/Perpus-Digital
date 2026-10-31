@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Catalog from './pages/Catalog';
+import BookDetail from './pages/BookDetail';
 
 function Protected({ children }) {
   const { user, loading } = useAuth();
@@ -18,6 +19,7 @@ function AppRoutes() {
       <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <Login />} />
       <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
       <Route path="/catalog" element={<Protected><Catalog /></Protected>} />
+      <Route path="/books/:id" element={<Protected><BookDetail /></Protected>} />
       <Route path="/" element={<Navigate to={user ? '/dashboard' : '/login'} replace />} />
     </Routes>
   );
