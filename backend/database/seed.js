@@ -12,18 +12,18 @@ for (const t of tables) { try { db.prepare(`DELETE FROM sqlite_sequence WHERE na
 const insertUser = db.prepare(`INSERT INTO users (username,password_hash,role,is_active) VALUES (?,?,?,1)`);
 const adminId = insertUser.run('admin', hash('admin123'), 'admin').lastInsertRowid;
 const petugasId = insertUser.run('petugas', hash('petugas123'), 'petugas').lastInsertRowid;
-const andiId = insertUser.run('andi', hash('siswa123'), 'siswa').lastInsertRowid;
+const andiId = insertUser.run('andi', hash('123456'), 'siswa').lastInsertRowid;
 
 const extraStudents = [
-  ['budi','budi123','Budi Santoso','Kelas 4B','10002'],
-  ['citra','citra123','Citra Lestari','Kelas 4A','10003'],
-  ['dani','dani123','Dani Firmansyah','Kelas 4C','10004'],
-  ['eka','eka123','Eka Putri','Kelas 5A','10005'],
-  ['fajar','fajar123','Fajar Ramadhan','Kelas 5B','10006'],
-  ['gita','gita123','Gita Ananda','Kelas 3A','10007'],
-  ['hadi','hadi123','Hadi Wijaya','Kelas 3B','10008'],
-  ['indah','indah123','Indah Sari','Kelas 6A','10009'],
-  ['joko','joko123','Joko Susilo','Kelas 6B','10010'],
+  ['budi','123456','Budi Santoso','Kelas 4B','10002'],
+  ['citra','123456','Citra Lestari','Kelas 4A','10003'],
+  ['dani','123456','Dani Firmansyah','Kelas 4C','10004'],
+  ['eka','123456','Eka Putri','Kelas 5A','10005'],
+  ['fajar','123456','Fajar Ramadhan','Kelas 5B','10006'],
+  ['gita','123456','Gita Ananda','Kelas 3A','10007'],
+  ['hadi','123456','Hadi Wijaya','Kelas 3B','10008'],
+  ['indah','123456','Indah Sari','Kelas 6A','10009'],
+  ['joko','123456','Joko Susilo','Kelas 6B','10010'],
 ];
 const studentUserIds = { andi: andiId };
 for (const [u,p,name,cls,nis] of extraStudents) {
