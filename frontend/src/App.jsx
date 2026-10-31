@@ -5,6 +5,8 @@ import Dashboard from './pages/Dashboard';
 import Catalog from './pages/Catalog';
 import BookDetail from './pages/BookDetail';
 import Reader from './pages/Reader';
+import Favorites from './pages/Favorites';
+import History from './pages/History';
 
 function Protected({ children }) {
   const { user, loading } = useAuth();
@@ -22,6 +24,8 @@ function AppRoutes() {
       <Route path="/catalog" element={<Protected><Catalog /></Protected>} />
       <Route path="/books/:id" element={<Protected><BookDetail /></Protected>} />
       <Route path="/read/:id" element={<Protected><Reader /></Protected>} />
+      <Route path="/favorites" element={<Protected><Favorites /></Protected>} />
+      <Route path="/history" element={<Protected><History /></Protected>} />
       <Route path="/" element={<Navigate to={user ? '/dashboard' : '/login'} replace />} />
     </Routes>
   );
