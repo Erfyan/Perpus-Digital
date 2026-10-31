@@ -19,6 +19,7 @@ app.use('/api/digital-books', require('./routes/digitalBooksRoutes'));
 app.use('/api/reading-progress', require('./routes/readingProgressRoutes'));
 app.use('/api/reading-history', require('./routes/readingHistoryRoutes'));
 app.use('/api/notifications', require('./routes/notificationsRoutes'));
+app.use('/api/admin', require('./routes/adminDashboardRoutes'));
 app.use('/api/favorites', require('./routes/favoritesRoutes'));
 
 // 404

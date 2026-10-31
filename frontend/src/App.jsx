@@ -8,6 +8,7 @@ import Reader from './pages/Reader';
 import Favorites from './pages/Favorites';
 import History from './pages/History';
 import Notifications from './pages/Notifications';
+import AdminDashboard from './pages/AdminDashboard';
 import Layout from './layouts/Layout';
 
 function Protected({ children }) {
@@ -31,6 +32,7 @@ function AppRoutes() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/history" element={<History />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Route>
     </Routes>
   );
