@@ -17,6 +17,7 @@ app.get('/api/health', (req, res) => res.json({ success: true, message: 'OK' }))
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/dashboard', require('./routes/dashboardRoutes'));
 app.use('/api/books', require('./routes/booksRoutes'));
+app.use('/api/digital-books', require('./routes/digitalUploadRoutes'));
 app.use('/api/digital-books', require('./routes/digitalBooksRoutes'));
 app.use('/api/reading-progress', require('./routes/readingProgressRoutes'));
 app.use('/api/reading-history', require('./routes/readingHistoryRoutes'));
