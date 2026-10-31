@@ -29,6 +29,37 @@ exports.list = (req, res) => {
   res.json({ success: true, data: rows, pagination: { page: Number(page), limit: Number(limit), total } });
 };
 
+exports.create = (req, res) => {
+  const { title, author, publisher, publication_year, category_id, description, book_type, stock, rating } = req.body || {};
+  if (!title) return res.status(400).json({ success: false, message: 'Judul wajib diisi' });
+  const code = 'BK' + Date.now();
+  const bid = db.prepare(`INSERT INTO books (code,isbn,title,author,publisher,publication_year,category_id,description,cover_path,book_type,stock,available_stock,rating,is_active) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,1)`)
+    .run(code, null, title, author || null, publisher || null, publication_year || null, category_id || null, description || null, null, book_type || 'fisik', stock || 0, stock || 0, rating || 0).lastInsertRowid;
+  res.json({ success: true, data: { id: bid } });
+};
+
+exports.update = (req, res) => {
+  const id = req.params.id;
+  const book = db.prepare('SELECT id FROM books WHERE id=?').get(id);
+  if (!book) return res.status(404).json({ success: false, message: 'Buku tidak ditemukan' });
+  const fields = ['title','author','publisher','publication_year','category_id','description','book_type','stock','available_stock','rating','is_active'];
+  const updates = [];
+  const params = [];
+  for (const f of fields) {
+    if (req.body[f] !== undefined) { updates.push(`${f}=?`); params.push(req.body[f]); }
+  }
+  if (updates.length) {
+    params.push(id);
+    db.prepare(`UPDATE books SET ${updates.join(',')}, updated_at=datetime('now') WHERE id=?`).run(...params);
+  }
+  res.json({ success: true, message: 'Buku diperbarui' });
+};
+
+exports.remove = (req, res) => {
+  const id = req.params.id;
+  db.prepare("UPDATE books SET is_active=0, updated_at=datetime('now') WHERE id=?").run(id);
+  res.json({ success: true, message: 'Buku dinonaktifkan' });
+};
 exports.detail = (req, res) => {
   const id = req.params.id;
   const book = db.prepare(`SELECT b.*, c.name AS category_name, c.slug AS category_slug FROM books b LEFT JOIN categories c ON c.id=b.category_id WHERE b.id=?`).get(id);
