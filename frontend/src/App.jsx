@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -7,6 +7,7 @@ import BookDetail from './pages/BookDetail';
 import Reader from './pages/Reader';
 import Favorites from './pages/Favorites';
 import History from './pages/History';
+import Layout from './layouts/Layout';
 
 function Protected({ children }) {
   const { user, loading } = useAuth();
@@ -20,13 +21,15 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <Login />} />
-      <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
-      <Route path="/catalog" element={<Protected><Catalog /></Protected>} />
-      <Route path="/books/:id" element={<Protected><BookDetail /></Protected>} />
-      <Route path="/read/:id" element={<Protected><Reader /></Protected>} />
-      <Route path="/favorites" element={<Protected><Favorites /></Protected>} />
-      <Route path="/history" element={<Protected><History /></Protected>} />
       <Route path="/" element={<Navigate to={user ? '/dashboard' : '/login'} replace />} />
+      <Route element={<Protected><Layout /></Protected>}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/catalog" element={<Catalog />} />
+        <Route path="/books/:id" element={<BookDetail />} />
+        <Route path="/read/:id" element={<Reader />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/history" element={<History />} />
+      </Route>
     </Routes>
   );
 }
