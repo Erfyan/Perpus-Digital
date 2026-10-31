@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const db = require('./database/db');
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(cors({ origin: process.env.CORS_ORIGIN || '*', credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/storage', express.static(path.join(__dirname, '..', 'storage')));
 app.get('/api/health', (req, res) => res.json({ success: true, message: 'OK' }));
 
 app.use('/api/auth', require('./routes/authRoutes'));
