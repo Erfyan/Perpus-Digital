@@ -12,6 +12,7 @@ export default function Layout() {
     ['Notifikasi','/notifications'],
   ];
   if (user?.role !== 'siswa') nav.push(['Admin','/admin']);
+  nav.push(['Kelola Buku','/admin/books']);
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <aside className="w-56 bg-white shadow p-4 space-y-2">
