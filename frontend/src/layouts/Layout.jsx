@@ -15,6 +15,7 @@ export default function Layout() {
   nav.push(['Kelola Buku','/admin/books']);
   nav.push(['Kategori','/admin/categories']);
   nav.push(['Peminjaman','/admin/loans']);
+  nav.push(['Siswa','/admin/students']);
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <aside className="w-56 bg-white shadow p-4 space-y-2">

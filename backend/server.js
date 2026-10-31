@@ -24,6 +24,7 @@ app.use('/api/notifications', require('./routes/notificationsRoutes'));
 app.use('/api/admin', require('./routes/adminDashboardRoutes'));
 app.use('/api/categories', require('./routes/categoriesRoutes'));
 app.use('/api/loans', require('./routes/loansRoutes'));
+app.use('/api/students', require('./routes/studentsRoutes'));
 app.use('/api/favorites', require('./routes/favoritesRoutes'));
 
 // 404

@@ -12,6 +12,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminBooks from './pages/AdminBooks';
 import AdminCategories from './pages/AdminCategories';
 import AdminLoans from './pages/AdminLoans';
+import AdminStudents from './pages/AdminStudents';
 import Layout from './layouts/Layout';
 
 function Protected({ children }) {
@@ -39,6 +40,7 @@ function AppRoutes() {
         <Route path="/admin/books" element={<AdminBooks />} />
         <Route path="/admin/categories" element={<AdminCategories />} />
         <Route path="/admin/loans" element={<AdminLoans />} />
+        <Route path="/admin/students" element={<AdminStudents />} />
       </Route>
     </Routes>
   );
