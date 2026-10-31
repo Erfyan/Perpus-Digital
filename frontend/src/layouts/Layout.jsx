@@ -9,6 +9,7 @@ export default function Layout() {
     ['Katalog','/catalog'],
     ['Favorit','/favorites'],
     ['Riwayat','/history'],
+    ['Notifikasi','/notifications'],
   ];
   return (
     <div className="min-h-screen bg-gray-50 flex">

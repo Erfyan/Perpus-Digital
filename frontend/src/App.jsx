@@ -7,6 +7,7 @@ import BookDetail from './pages/BookDetail';
 import Reader from './pages/Reader';
 import Favorites from './pages/Favorites';
 import History from './pages/History';
+import Notifications from './pages/Notifications';
 import Layout from './layouts/Layout';
 
 function Protected({ children }) {
@@ -29,6 +30,7 @@ function AppRoutes() {
         <Route path="/read/:id" element={<Reader />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/history" element={<History />} />
+        <Route path="/notifications" element={<Notifications />} />
       </Route>
     </Routes>
   );
