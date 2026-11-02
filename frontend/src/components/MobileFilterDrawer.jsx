@@ -1,4 +1,18 @@
-import { X, Check, RotateCcw, Filter, ArrowUpDown, GraduationCap, Sparkles } from 'lucide-react';
+import {
+  X,
+  Check,
+  RotateCcw,
+  Filter,
+  ArrowUpDown,
+  GraduationCap,
+  Sparkles,
+  Star,
+  Calendar,
+  Smartphone,
+  BookOpen,
+  Tag,
+  ArrowDownAZ
+} from 'lucide-react';
 
 export default function MobileFilterDrawer({
   isOpen,
@@ -12,6 +26,19 @@ export default function MobileFilterDrawer({
   onReset,
 }) {
   if (!isOpen) return null;
+
+  const sortOptions = [
+    { value: 'newest', label: 'Terbaru', icon: Sparkles },
+    { value: 'rating', label: 'Rating Tertinggi', icon: Star },
+    { value: 'title', label: 'Judul (A - Z)', icon: ArrowDownAZ },
+    { value: 'oldest', label: 'Terlama', icon: Calendar },
+  ];
+
+  const typeOptions = [
+    { value: '', label: 'Semua', icon: null },
+    { value: 'digital', label: 'Digital', icon: Smartphone },
+    { value: 'fisik', label: 'Fisik', icon: BookOpen },
+  ];
 
   return (
     <div className="fixed inset-0 z-50 md:hidden animate-in fade-in duration-200">
@@ -51,25 +78,26 @@ export default function MobileFilterDrawer({
               Urutkan Berdasarkan
             </label>
             <div className="grid grid-cols-2 gap-2">
-              {[
-                { value: 'newest', label: '✨ Terbaru' },
-                { value: 'rating', label: '⭐ Rating Tertinggi' },
-                { value: 'title', label: '🔤 Judul (A - Z)' },
-                { value: 'oldest', label: '📅 Terlama' },
-              ].map((s) => (
-                <button
-                  key={s.value}
-                  onClick={() => onApply('sort', s.value)}
-                  className={`px-3 py-2.5 rounded-2xl text-xs font-bold transition-all border text-left flex items-center justify-between ${
-                    currentSort === s.value
-                      ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                      : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                  }`}
-                >
-                  <span>{s.label}</span>
-                  {currentSort === s.value && <Check className="w-3.5 h-3.5 text-white" />}
-                </button>
-              ))}
+              {sortOptions.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <button
+                    key={s.value}
+                    onClick={() => onApply('sort', s.value)}
+                    className={`px-3 py-2.5 rounded-2xl text-xs font-bold transition-all border text-left flex items-center justify-between ${
+                      currentSort === s.value
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    <span className="flex items-center gap-1.5">
+                      {Icon && <Icon className="w-3.5 h-3.5" />}
+                      {s.label}
+                    </span>
+                    {currentSort === s.value && <Check className="w-3.5 h-3.5 text-white" />}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -80,23 +108,23 @@ export default function MobileFilterDrawer({
               Format / Jenis Buku
             </label>
             <div className="grid grid-cols-3 gap-2">
-              {[
-                { value: '', label: 'Semua' },
-                { value: 'digital', label: '📱 Digital' },
-                { value: 'fisik', label: '📖 Fisik' },
-              ].map((t) => (
-                <button
-                  key={t.value}
-                  onClick={() => onApply('type', t.value)}
-                  className={`px-3 py-2.5 rounded-2xl text-xs font-bold transition-all border text-center ${
-                    currentType === t.value
-                      ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                      : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                  }`}
-                >
-                  {t.label}
-                </button>
-              ))}
+              {typeOptions.map((t) => {
+                const Icon = t.icon;
+                return (
+                  <button
+                    key={t.value}
+                    onClick={() => onApply('type', t.value)}
+                    className={`px-3 py-2.5 rounded-2xl text-xs font-bold transition-all border flex items-center justify-center gap-1.5 ${
+                      currentType === t.value
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    {Icon && <Icon className="w-3.5 h-3.5" />}
+                    <span>{t.label}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -136,7 +164,7 @@ export default function MobileFilterDrawer({
           {/* 4. Kategori Buku */}
           <div>
             <label className="text-xs font-black text-slate-700 flex items-center gap-1.5 mb-2.5">
-              🏷️ Kategori Buku
+              <Tag className="w-3.5 h-3.5 text-blue-600" /> Kategori Buku
             </label>
             <div className="flex flex-wrap gap-1.5">
               <button
@@ -189,4 +217,3 @@ export default function MobileFilterDrawer({
     </div>
   );
 }
-

@@ -1,5 +1,24 @@
 @import "tailwindcss";
 
+/* ── Aurora Animation ─────────────────────────────────────── */
+@keyframes aurora {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translate3d(8%, 6%, 0) rotate(12deg) scale(1.08);
+  }
+  66% {
+    transform: translate3d(-6%, 10%, 0) rotate(-8deg) scale(0.96);
+  }
+}
+
+@utility animate-aurora {
+  animation: aurora ease-in-out infinite alternate;
+}
+
+/* ── Base Styles ──────────────────────────────────────────── */
 @layer base {
   body {
     margin: 0;
@@ -26,4 +45,3 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-

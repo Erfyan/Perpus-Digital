@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Outlet, NavLink, useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../lib/api';
+import Aurora from '@/components/ui/aurora';
 import MobileBottomNav from '../components/MobileBottomNav';
 import MobileDrawer from '../components/MobileDrawer';
 import MobileSearchModal from '../components/MobileSearchModal';
@@ -29,7 +30,8 @@ import {
   History,
   BarChart3,
   Database,
-  Menu
+  Menu,
+  GraduationCap
 } from 'lucide-react';
 
 export default function Layout() {
@@ -118,14 +120,24 @@ export default function Layout() {
   const isReaderPage = location.pathname.startsWith('/read/');
 
   return (
-    <div className="min-h-screen bg-[#F0F5FD] flex flex-col md:flex-row font-sans text-slate-800">
+    <>
+    {/* Aurora Background — fixed di layer paling belakang */}
+    <Aurora
+      colors={['#38bdf8', '#818cf8', '#c084fc']}
+      duration={25}
+      intensity={0.15}
+      className="!fixed inset-0 pointer-events-none"
+      style={{ zIndex: -100 }}
+    />
+    {/* Konten utama — selalu di atas Aurora */}
+    <div className="min-h-screen bg-[#F0F5FD]/70 flex flex-col md:flex-row font-sans text-slate-800 relative z-0">
       {/* 1. SIDEBAR KHUSUS TABLET (RAIL ICON) & DESKTOP (EXPANDED) */}
       <aside className="hidden md:flex flex-col justify-between md:w-20 lg:w-64 bg-white border-r border-slate-100 p-3 lg:p-5 shadow-xs z-20 shrink-0 sticky top-0 h-screen transition-all duration-300">
         <div className="overflow-y-auto no-scrollbar">
           {/* LOGO PERPUSTAKAAN */}
           <div className="flex items-center gap-3 px-1 lg:px-2 py-3 mb-4 justify-center lg:justify-start">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-sky-400 flex items-center justify-center text-white shadow-md shadow-blue-200 shrink-0">
-              <BookOpen className="w-6 h-6 stroke-[2.2]" />
+            <div className="w-10 h-10 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center justify-center p-1 shrink-0 overflow-hidden">
+              <img src="/img/logo.jpg" alt="Logo Perpustakaan Digital" className="w-full h-full object-contain" />
             </div>
             <div className="hidden lg:block">
               <h1 className="font-extrabold text-base leading-tight text-slate-800 tracking-tight flex items-center gap-1.5">
@@ -208,8 +220,14 @@ export default function Layout() {
         <div className="mt-4 pt-3 border-t border-slate-100 hidden lg:block">
           <div className="bg-gradient-to-b from-blue-50/80 to-sky-100/70 rounded-2xl p-3 relative overflow-hidden border border-blue-100/60 text-center">
             <div className="relative z-10 flex flex-col items-center">
-              <div className="w-11 h-11 rounded-full bg-white shadow-xs flex items-center justify-center text-xl mb-1 border border-blue-100">
-                {user?.role === 'petugas' ? '👩‍💼📚' : user?.role === 'admin' ? '🛡️✨' : '👦📖'}
+              <div className="w-11 h-11 rounded-full bg-white shadow-xs flex items-center justify-center mb-1 border border-blue-100 text-blue-600">
+                {user?.role === 'petugas' ? (
+                  <Library className="w-6 h-6 text-blue-600" />
+                ) : user?.role === 'admin' ? (
+                  <Shield className="w-6 h-6 text-indigo-600" />
+                ) : (
+                  <GraduationCap className="w-6 h-6 text-blue-600" />
+                )}
               </div>
               <p className="text-xs font-bold text-slate-700">
                 {user?.role === 'petugas' ? 'Layanan Perpustakaan' : user?.role === 'admin' ? 'Kendali Admin SD' : 'Ayo Rajin Membaca!'}
@@ -227,8 +245,8 @@ export default function Layout() {
         {/* A. MOBILE NATIVE APP BAR (< md) */}
         <header className="md:hidden bg-white/95 backdrop-blur-md sticky top-0 z-30 px-4 py-3 flex items-center justify-between border-b border-slate-100 shadow-2xs">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-400 flex items-center justify-center text-white shadow-xs">
-              <BookOpen className="w-4 h-4 stroke-[2.5]" />
+            <div className="w-8 h-8 rounded-xl bg-white border border-slate-100 shadow-2xs flex items-center justify-center p-0.5 shrink-0 overflow-hidden">
+              <img src="/img/logo.jpg" alt="Logo Perpustakaan Digital" className="w-full h-full object-contain" />
             </div>
             <div>
               <h2 className="font-black text-sm leading-tight text-slate-800">
@@ -267,9 +285,15 @@ export default function Layout() {
             {/* Avatar Mini & Trigger Drawer */}
             <button
               onClick={() => setDrawerOpen(true)}
-              className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-300 to-orange-400 flex items-center justify-center text-sm shadow-xs border border-white"
+              className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-sky-400 flex items-center justify-center text-white shadow-xs border border-white"
             >
-              {user?.role === 'admin' ? '🛡️' : user?.role === 'petugas' ? '👩‍💼' : '👦'}
+              {user?.role === 'admin' ? (
+                <Shield className="w-4 h-4" />
+              ) : user?.role === 'petugas' ? (
+                <UserCheck className="w-4 h-4" />
+              ) : (
+                <User className="w-4 h-4" />
+              )}
             </button>
           </div>
         </header>
@@ -311,8 +335,14 @@ export default function Layout() {
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="flex items-center gap-3 p-1.5 pr-3 rounded-full hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100"
               >
-                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-300 to-orange-400 flex items-center justify-center text-lg shadow-xs border border-white">
-                  {user?.role === 'petugas' ? '👩‍💼' : user?.role === 'admin' ? '🛡️' : '👦'}
+                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-600 to-sky-400 flex items-center justify-center text-white shadow-xs border border-white">
+                  {user?.role === 'petugas' ? (
+                    <UserCheck className="w-4 h-4" />
+                  ) : user?.role === 'admin' ? (
+                    <Shield className="w-4 h-4" />
+                  ) : (
+                    <User className="w-4 h-4" />
+                  )}
                 </div>
                 <div className="text-left hidden sm:block">
                   <p className="text-xs font-bold text-slate-800 leading-tight">
@@ -403,5 +433,6 @@ export default function Layout() {
         onClose={() => setSearchModalOpen(false)}
       />
     </div>
+    </>
   );
 }

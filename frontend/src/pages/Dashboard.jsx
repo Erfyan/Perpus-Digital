@@ -21,7 +21,9 @@ import {
   HeartPulse,
   Church,
   Library,
-  BookmarkCheck
+  BookmarkCheck,
+  Building2,
+  User
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -85,39 +87,35 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      {/* 1. WELCOME BANNER (SESUAI GAMBAR REFERENSI & PRD 5.2) */}
-      <div className="relative rounded-3xl bg-gradient-to-r from-[#D7EEFF] via-[#E6F3FF] to-[#CDE7FF] border border-[#BBDDFF] p-6 sm:p-8 overflow-hidden shadow-xs">
-        <div className="relative z-10 max-w-xl">
-          <h2 className="text-2xl sm:text-3xl font-black text-[#153B68] tracking-tight">
+      {/* 1. WELCOME HERO BANNER DENGAN GAMBAR BANNER PANJANG */}
+      <div className="relative rounded-3xl overflow-hidden border border-slate-200/80 shadow-md min-h-[190px] sm:min-h-[220px] flex items-center">
+        {/* Background Image Banner */}
+        <img
+          src="/img/Banner-panjang.jpg"
+          alt="Banner Perpustakaan Digital"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+
+        {/* Gradient Overlay untuk Menjamin Kontras Teks yang Jelas */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-blue-950/80 to-blue-900/30" />
+
+        {/* Banner Content */}
+        <div className="relative z-10 p-6 sm:p-8 max-w-xl text-white">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/30 border border-blue-400/40 text-blue-200 text-xs font-bold backdrop-blur-xs mb-2.5">
+            <Sparkles className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+            <span>Perpustakaan Digital Ramah Anak</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white drop-shadow-sm">
             Selamat datang, <br className="sm:hidden" />
-            <span>{student?.full_name || 'Andi Pratama'}! 👋</span>
+            <span className="text-amber-300">{student?.full_name || 'Andi Pratama'}!</span>
           </h2>
-          <p className="text-sm sm:text-base font-bold text-[#1E5697] mt-1.5 italic">
+          <p className="text-sm sm:text-base font-semibold text-blue-100 mt-1.5 italic">
             “Membaca buku membuka jendela dunia.”
           </p>
-          <p className="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-            Yuk, jelajahi koleksi buku menarik di perpustakaan digital kita!
+          <p className="text-xs sm:text-sm text-slate-200 mt-1 leading-relaxed">
+            Yuk, jelajahi koleksi buku menarik dan seru di perpustakaan digital kita!
           </p>
         </div>
-
-        {/* Decorative Library Building & Reading Mascot */}
-        <div className="absolute right-2 sm:right-6 bottom-0 sm:bottom-1 flex items-end pointer-events-none select-none opacity-85 sm:opacity-100">
-          <div className="hidden md:flex flex-col items-center mr-4 mb-2">
-            <div className="w-48 bg-amber-100/90 border-2 border-amber-300 rounded-2xl p-2.5 text-center shadow-md relative">
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-500 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-full shadow-xs">
-                PERPUSTAKAAN DIGITAL SD
-              </div>
-              <div className="text-2xl mt-1">🏫📚</div>
-            </div>
-          </div>
-          <div className="text-6xl sm:text-8xl filter drop-shadow-md transform -translate-y-1">
-            👦📖👧
-          </div>
-        </div>
-
-        {/* Soft background accents */}
-        <div className="absolute top-2 right-1/3 w-20 h-10 bg-white/40 rounded-full blur-xs pointer-events-none" />
-        <div className="absolute bottom-2 left-1/2 w-32 h-14 bg-white/30 rounded-full blur-xs pointer-events-none" />
       </div>
 
       {/* 2. STATISTIK 4 CARD (NILAI MURNI DARI DATABASE SQLITE, BUKAN HARDCODE) */}
@@ -247,7 +245,9 @@ export default function Dashboard() {
                   <h3 className="font-extrabold text-base text-slate-800">
                     Rekomendasi Buku untuk Kamu
                   </h3>
-                  <p className="text-[11px] text-slate-400 sm:hidden">Geser untuk melihat buku lainnya 👉</p>
+                  <p className="text-[11px] text-slate-400 sm:hidden flex items-center gap-1">
+                    Geser untuk melihat buku lainnya <ArrowRight className="w-3 h-3 inline" />
+                  </p>
                 </div>
               </div>
               <Link
@@ -306,7 +306,9 @@ export default function Dashboard() {
                 </div>
                 <div>
                   <h3 className="font-extrabold text-base text-slate-800">Buku Terbaru</h3>
-                  <p className="text-[11px] text-slate-400 sm:hidden">Geser untuk melihat buku terbaru 👉</p>
+                  <p className="text-[11px] text-slate-400 sm:hidden flex items-center gap-1">
+                    Geser untuk melihat buku terbaru <ArrowRight className="w-3 h-3 inline" />
+                  </p>
                 </div>
               </div>
               <Link
@@ -378,8 +380,8 @@ export default function Dashboard() {
                     className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-3 hover:bg-slate-100/70 transition-all"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-lg shrink-0">
-                        👦
+                      <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold shrink-0">
+                        <User className="w-5 h-5" />
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-1.5">
@@ -392,8 +394,9 @@ export default function Dashboard() {
                             </span>
                           )}
                         </div>
-                        <p className="text-[11px] font-semibold text-slate-600 truncate mt-0.5">
-                          📖 {loan.book_title}
+                        <p className="text-[11px] font-semibold text-slate-600 truncate mt-0.5 flex items-center gap-1">
+                          <BookOpen className="w-3 h-3 text-blue-500 shrink-0 inline" />
+                          <span>{loan.book_title}</span>
                         </p>
                         <p className="text-[10px] text-slate-400 mt-0.5">
                           Jatuh Tempo: {loan.due_date}

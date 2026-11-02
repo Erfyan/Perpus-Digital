@@ -133,7 +133,9 @@ export default function MyLoans() {
         </div>
       ) : loans.length === 0 ? (
         <div className="bg-white rounded-3xl p-12 text-center border border-slate-100 max-w-md mx-auto">
-          <div className="text-5xl mb-3">📚✨</div>
+          <div className="w-16 h-16 rounded-3xl bg-blue-50 text-blue-500 flex items-center justify-center mx-auto mb-3 shadow-inner">
+            <BookOpen className="w-8 h-8" />
+          </div>
           <h4 className="text-base font-bold text-slate-700">Tidak ada data peminjaman</h4>
           <p className="text-xs text-slate-400 mt-1">
             {filterMode === 'mine'
@@ -168,7 +170,7 @@ export default function MyLoans() {
                     {/* Header Peminjam & Kode */}
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
                       <span className="text-xs font-black text-slate-800 bg-slate-100 px-2.5 py-0.5 rounded-lg flex items-center gap-1.5">
-                        👦 {borrower}
+                        <User className="w-3.5 h-3.5 text-blue-600 inline" /> {borrower}
                       </span>
                       {item.class_name && (
                         <span className="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-lg border border-blue-100">

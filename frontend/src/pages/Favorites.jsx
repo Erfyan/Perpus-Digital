@@ -53,7 +53,9 @@ export default function Favorites() {
         </div>
       ) : items.length === 0 ? (
         <div className="bg-white rounded-3xl p-12 text-center border border-slate-100 max-w-md mx-auto">
-          <div className="text-5xl mb-3">💖📚</div>
+          <div className="w-16 h-16 rounded-3xl bg-rose-50 text-rose-500 flex items-center justify-center mx-auto mb-3 shadow-inner">
+            <Heart className="w-8 h-8 fill-rose-400 text-rose-500" />
+          </div>
           <h4 className="text-base font-bold text-slate-700">Belum ada buku favorit</h4>
           <p className="text-xs text-slate-400 mt-1">
             Tekan tombol hati pada buku di katalog untuk menambahkannya ke sini.

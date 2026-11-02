@@ -1,26 +1,40 @@
 import React from 'react';
-import { BookOpen, Sparkles, Compass, Heart, Award, Star, FlaskConical, Stethoscope, Smile } from 'lucide-react';
+import {
+  BookOpen,
+  Sparkles,
+  FlaskConical,
+  Landmark,
+  Calculator,
+  Sprout,
+  Flag,
+  HeartPulse,
+  ShieldCheck,
+  Footprints,
+  Rocket
+} from 'lucide-react';
 
 const COVER_THEMES = {
-  'Dongeng Nusantara': { bg: 'from-amber-400 to-emerald-600', emoji: '🏰', badge: 'Cerita', pattern: 'castle' },
-  'Sains di Sekitarku': { bg: 'from-blue-600 to-indigo-800', emoji: '🔬', badge: 'Sains', pattern: 'atoms' },
-  'Matematika Menyenangkan': { bg: 'from-sky-400 to-blue-600', emoji: '📐', badge: 'Pelajaran', pattern: 'numbers' },
-  'Ayo Jaga Lingkungan': { bg: 'from-emerald-400 to-teal-700', emoji: '🌱', badge: 'Pengetahuan Umum', pattern: 'leaves' },
-  'Komik Pahlawan Indonesia': { bg: 'from-rose-500 to-red-700', emoji: '🇮🇩', badge: 'Komik Edukasi', pattern: 'flag' },
-  'Matematika Kelas 4 SD': { bg: 'from-cyan-400 to-blue-500', emoji: '🔢', badge: 'Pelajaran', pattern: 'math' },
-  'Petualangan Si Kancil': { bg: 'from-amber-500 to-emerald-700', emoji: '🦌', badge: 'Cerita', pattern: 'forest' },
-  'Tubuh Manusia untuk Anak': { bg: 'from-orange-400 to-rose-500', emoji: '🫀', badge: 'Sains', pattern: 'body' },
-  'Aku Bisa Menjaga Diri': { bg: 'from-yellow-400 to-amber-600', emoji: '🧒', badge: 'Kesehatan', pattern: 'shield' },
-  'Ensiklopedia Hewan': { bg: 'from-emerald-500 to-teal-800', emoji: '🐘', badge: 'Pengetahuan Umum', pattern: 'zoo' },
-  'Cita-Citaku': { bg: 'from-indigo-500 to-purple-800', emoji: '🚀', badge: 'Inspirasi', pattern: 'space' },
+  'Dongeng Nusantara': { bg: 'from-amber-400 to-emerald-600', icon: Landmark, badge: 'Cerita' },
+  'Sains di Sekitarku': { bg: 'from-blue-600 to-indigo-800', icon: FlaskConical, badge: 'Sains' },
+  'Matematika Menyenangkan': { bg: 'from-sky-400 to-blue-600', icon: Calculator, badge: 'Pelajaran' },
+  'Ayo Jaga Lingkungan': { bg: 'from-emerald-400 to-teal-700', icon: Sprout, badge: 'Pengetahuan Umum' },
+  'Komik Pahlawan Indonesia': { bg: 'from-rose-500 to-red-700', icon: Flag, badge: 'Komik Edukasi' },
+  'Matematika Kelas 4 SD': { bg: 'from-cyan-400 to-blue-500', icon: Calculator, badge: 'Pelajaran' },
+  'Petualangan Si Kancil': { bg: 'from-amber-500 to-emerald-700', icon: Footprints, badge: 'Cerita' },
+  'Tubuh Manusia untuk Anak': { bg: 'from-orange-400 to-rose-500', icon: HeartPulse, badge: 'Sains' },
+  'Aku Bisa Menjaga Diri': { bg: 'from-yellow-400 to-amber-600', icon: ShieldCheck, badge: 'Kesehatan' },
+  'Ensiklopedia Hewan': { bg: 'from-emerald-500 to-teal-800', icon: Footprints, badge: 'Pengetahuan Umum' },
+  'Cita-Citaku': { bg: 'from-indigo-500 to-purple-800', icon: Rocket, badge: 'Inspirasi' },
 };
 
 export default function BookCover({ title = 'Buku Digital', category = '', className = '' }) {
   const theme = COVER_THEMES[title] || {
     bg: 'from-blue-500 to-sky-700',
-    emoji: '📚',
+    icon: BookOpen,
     badge: category || 'Buku SD',
   };
+
+  const IconComponent = theme.icon || BookOpen;
 
   return (
     <div
@@ -39,8 +53,8 @@ export default function BookCover({ title = 'Buku Digital', category = '', class
 
       {/* Main Illustration Center */}
       <div className="flex-1 flex flex-col items-center justify-center my-1 z-10 text-center">
-        <div className="text-3xl sm:text-4xl filter drop-shadow-md transform hover:scale-110 transition-transform">
-          {theme.emoji}
+        <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-xs flex items-center justify-center filter drop-shadow-md transform hover:scale-110 transition-transform">
+          <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 text-white stroke-[2.2]" />
         </div>
       </div>
 
@@ -58,4 +72,3 @@ export default function BookCover({ title = 'Buku Digital', category = '', class
     </div>
   );
 }
-

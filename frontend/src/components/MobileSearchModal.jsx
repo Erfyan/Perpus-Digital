@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, X, Sparkles, BookOpen, ArrowRight } from 'lucide-react';
+import { Search, X, Sparkles, BookOpen, ArrowRight, Lightbulb } from 'lucide-react';
 
 export default function MobileSearchModal({ isOpen, onClose }) {
   const [query, setQuery] = useState('');
@@ -90,7 +90,9 @@ export default function MobileSearchModal({ isOpen, onClose }) {
         {/* Tips Membaca untuk Siswa SD */}
         <div className="bg-gradient-to-tr from-blue-50 to-sky-100 rounded-3xl p-5 border border-blue-100/80">
           <div className="flex items-center gap-3 mb-2">
-            <span className="text-2xl">👦💡</span>
+            <div className="w-10 h-10 rounded-2xl bg-white shadow-xs flex items-center justify-center text-amber-500 shrink-0">
+              <Lightbulb className="w-5 h-5 text-amber-500" />
+            </div>
             <div>
               <h4 className="font-black text-sm text-blue-950">Tips Menemukan Buku</h4>
               <p className="text-[11px] text-blue-700">Gunakan kata kunci singkat</p>

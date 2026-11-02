@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { BookOpen, Sparkles, User, Lock, ArrowRight, ShieldCheck, Library } from 'lucide-react';
+import { BookOpen, Sparkles, User, Lock, ArrowRight, ShieldCheck, Library, UserCheck, Shield, GraduationCap } from 'lucide-react';
+import Aurora from '@/components/ui/aurora';
 
 export default function Login() {
   const { login } = useAuth();
@@ -39,7 +40,12 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#E6F3FF] via-[#F4F9FF] to-[#EDE4FF] flex items-center justify-center p-4 sm:p-6 font-sans">
+    <Aurora
+      colors={['#60a5fa', '#a78bfa', '#f472b6']}
+      duration={20}
+      intensity={0.25}
+      className="min-h-screen flex items-center justify-center p-4 sm:p-6 font-sans bg-gradient-to-br from-[#E6F3FF] via-[#F4F9FF] to-[#EDE4FF]"
+    >
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-slate-100 p-6 sm:p-8 relative overflow-hidden">
         {/* Soft Background Accents */}
         <div className="absolute -top-12 -right-12 w-32 h-32 bg-blue-100/50 rounded-full blur-xl pointer-events-none" />
@@ -47,8 +53,8 @@ export default function Login() {
 
         {/* Brand Logo Header */}
         <div className="text-center mb-6">
-          <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-blue-600 to-sky-400 mx-auto flex items-center justify-center text-white shadow-lg shadow-blue-200 mb-3">
-            <BookOpen className="w-8 h-8 stroke-[2.2]" />
+          <div className="w-16 h-16 rounded-3xl bg-white mx-auto flex items-center justify-center shadow-lg shadow-blue-200/50 border border-slate-100 p-2 mb-3 overflow-hidden">
+            <img src="/img/logo.jpg" alt="Logo Perpustakaan Digital" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-xl sm:text-2xl font-black text-slate-800 tracking-tight flex items-center justify-center gap-1.5">
             Perpustakaan Digital SD
@@ -68,40 +74,40 @@ export default function Login() {
             <button
               type="button"
               onClick={() => handleQuickLogin('petugas', 'petugas123')}
-              className={`p-2 rounded-xl text-center border transition-all ${
+              className={`p-2 rounded-xl text-center border transition-all flex flex-col items-center justify-center ${
                 username === 'petugas'
                   ? 'bg-blue-600 text-white font-bold border-blue-600 shadow-xs'
                   : 'bg-white text-slate-700 font-medium hover:bg-slate-100 border-slate-200'
               }`}
             >
-              <div className="text-base">👩‍💼</div>
-              <p className="text-[10px] mt-0.5 truncate font-bold">Petugas</p>
+              <UserCheck className="w-5 h-5 mx-auto" />
+              <p className="text-[10px] mt-1 truncate font-bold">Petugas</p>
             </button>
 
             <button
               type="button"
               onClick={() => handleQuickLogin('andi', 'siswa123')}
-              className={`p-2 rounded-xl text-center border transition-all ${
+              className={`p-2 rounded-xl text-center border transition-all flex flex-col items-center justify-center ${
                 username === 'andi'
                   ? 'bg-blue-600 text-white font-bold border-blue-600 shadow-xs'
                   : 'bg-white text-slate-700 font-medium hover:bg-slate-100 border-slate-200'
               }`}
             >
-              <div className="text-base">👦</div>
-              <p className="text-[10px] mt-0.5 truncate font-bold">Andi (Siswa)</p>
+              <GraduationCap className="w-5 h-5 mx-auto" />
+              <p className="text-[10px] mt-1 truncate font-bold">Andi (Siswa)</p>
             </button>
 
             <button
               type="button"
               onClick={() => handleQuickLogin('admin', 'admin123')}
-              className={`p-2 rounded-xl text-center border transition-all ${
+              className={`p-2 rounded-xl text-center border transition-all flex flex-col items-center justify-center ${
                 username === 'admin'
                   ? 'bg-blue-600 text-white font-bold border-blue-600 shadow-xs'
                   : 'bg-white text-slate-700 font-medium hover:bg-slate-100 border-slate-200'
               }`}
             >
-              <div className="text-base">🛡️</div>
-              <p className="text-[10px] mt-0.5 truncate font-bold">Admin</p>
+              <Shield className="w-5 h-5 mx-auto" />
+              <p className="text-[10px] mt-1 truncate font-bold">Admin</p>
             </button>
           </div>
         </div>
@@ -168,6 +174,6 @@ export default function Login() {
           Perpustakaan Digital Ramah Anak • Sekolah Dasar
         </div>
       </div>
-    </div>
+    </Aurora>
   );
 }

@@ -53,33 +53,41 @@ export default function PetugasDashboard() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-blue-700 via-indigo-700 to-sky-700 rounded-3xl p-6 text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <span className="bg-white/20 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-xs">
-            Panel Operasional Petugas Perpustakaan
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-black mt-2 tracking-tight">
-            Dashboard Sirkulasi & Koleksi
-          </h2>
-          <p className="text-xs sm:text-sm text-blue-100 mt-1">
-            Pantau transaksi peminjaman, pengembalian buku fisik, koleksi digital, dan data siswa.
-          </p>
-        </div>
+      <div className="relative rounded-3xl overflow-hidden shadow-sm min-h-[140px] flex items-center border border-blue-900/40">
+        <img
+          src="/img/Banner-panjang.jpg"
+          alt="Banner Petugas Perpustakaan"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-950/95 via-indigo-950/90 to-blue-900/50" />
+        <div className="relative z-10 p-6 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
+          <div>
+            <span className="bg-white/20 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-xs">
+              Panel Operasional Petugas Perpustakaan
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black mt-2 tracking-tight drop-shadow-sm">
+              Dashboard Sirkulasi & Koleksi
+            </h2>
+            <p className="text-xs sm:text-sm text-blue-100 mt-1">
+              Pantau transaksi peminjaman, pengembalian buku fisik, koleksi digital, dan data siswa.
+            </p>
+          </div>
 
-        {/* Quick Transaction Action Buttons */}
-        <div className="flex items-center gap-2">
-          <Link
-            to="/petugas/loans"
-            className="bg-white text-blue-700 hover:bg-blue-50 font-extrabold text-xs px-4 py-2.5 rounded-2xl flex items-center gap-1.5 shadow-sm transition-all"
-          >
-            <PlusCircle className="w-4 h-4" /> Pinjam Baru
-          </Link>
-          <Link
-            to="/petugas/returns"
-            className="bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs px-4 py-2.5 rounded-2xl flex items-center gap-1.5 shadow-sm transition-all"
-          >
-            <CheckCircle2 className="w-4 h-4" /> Pengembalian
-          </Link>
+          {/* Quick Transaction Action Buttons */}
+          <div className="flex items-center gap-2 shrink-0">
+            <Link
+              to="/petugas/loans"
+              className="bg-white text-blue-700 hover:bg-blue-50 font-extrabold text-xs px-4 py-2.5 rounded-2xl flex items-center gap-1.5 shadow-sm transition-all"
+            >
+              <PlusCircle className="w-4 h-4" /> Pinjam Baru
+            </Link>
+            <Link
+              to="/petugas/returns"
+              className="bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs px-4 py-2.5 rounded-2xl flex items-center gap-1.5 shadow-sm transition-all"
+            >
+              <CheckCircle2 className="w-4 h-4" /> Pengembalian
+            </Link>
+          </div>
         </div>
       </div>
 

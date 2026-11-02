@@ -78,8 +78,14 @@ export default function MobileDrawer({
         {/* Header Profile Card */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-100">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white text-2xl shadow-md shadow-blue-200">
-              {user?.role === 'admin' ? '🛡️' : user?.role === 'petugas' ? '👩‍💼' : '👦'}
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-200">
+              {user?.role === 'admin' ? (
+                <Shield className="w-6 h-6" />
+              ) : user?.role === 'petugas' ? (
+                <UserCheck className="w-6 h-6" />
+              ) : (
+                <User className="w-6 h-6" />
+              )}
             </div>
             <div>
               <div className="flex items-center gap-1.5">

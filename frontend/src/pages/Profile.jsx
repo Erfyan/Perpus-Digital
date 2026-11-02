@@ -20,8 +20,8 @@ export default function Profile() {
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 rounded-3xl p-6 sm:p-8 text-white shadow-sm flex flex-col sm:flex-row items-center gap-6">
-        <div className="w-24 h-24 rounded-3xl bg-white shadow-lg flex items-center justify-center text-5xl border-4 border-white/50">
-          👦
+        <div className="w-24 h-24 rounded-3xl bg-white shadow-lg flex items-center justify-center text-blue-600 border-4 border-white/50">
+          <User className="w-12 h-12 text-blue-600" />
         </div>
         <div className="text-center sm:text-left">
           <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-xs">

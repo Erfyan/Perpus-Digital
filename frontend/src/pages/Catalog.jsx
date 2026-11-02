@@ -109,16 +109,24 @@ export default function Catalog() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-blue-600 via-sky-600 to-indigo-600 rounded-3xl p-6 text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-black tracking-tight">Katalog Buku Perpustakaan</h2>
-          <p className="text-xs sm:text-sm text-blue-100 mt-1">
-            Temukan buku pelajaran, dongeng, sains, komik edukasi, dan cerita menarik!
-          </p>
-        </div>
-        <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-2xl backdrop-blur-xs text-xs font-bold shrink-0">
-          <BookOpen className="w-4 h-4 text-amber-300" />
-          <span>{pagination.total} Total Koleksi</span>
+      <div className="relative rounded-3xl overflow-hidden shadow-sm min-h-[130px] flex items-center border border-slate-200/80">
+        <img
+          src="/img/Banner-panjang.jpg"
+          alt="Banner Katalog Perpustakaan"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-950/90 via-sky-950/80 to-blue-900/40" />
+        <div className="relative z-10 p-6 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
+          <div>
+            <h2 className="text-2xl font-black tracking-tight text-white drop-shadow-sm">Katalog Buku Perpustakaan</h2>
+            <p className="text-xs sm:text-sm text-blue-100 mt-1">
+              Temukan buku pelajaran, dongeng, sains, komik edukasi, dan cerita menarik!
+            </p>
+          </div>
+          <div className="flex items-center gap-2 bg-white/20 border border-white/30 px-4 py-2 rounded-2xl backdrop-blur-md text-xs font-bold shrink-0">
+            <BookOpen className="w-4 h-4 text-amber-300" />
+            <span>{pagination.total} Total Koleksi</span>
+          </div>
         </div>
       </div>
 
@@ -289,7 +297,9 @@ export default function Catalog() {
         </div>
       ) : books.length === 0 ? (
         <div className="bg-white rounded-3xl p-12 text-center border border-slate-100">
-          <div className="text-5xl mb-3">🔍📚</div>
+          <div className="w-16 h-16 rounded-3xl bg-blue-50 text-blue-500 flex items-center justify-center mx-auto mb-3 shadow-inner">
+            <Search className="w-8 h-8" />
+          </div>
           <h4 className="text-base font-bold text-slate-700">Tidak ada buku yang cocok</h4>
           <p className="text-xs text-slate-400 mt-1">
             Coba gunakan kata kunci pencarian lain atau klik Bersihkan Filter.

@@ -65,7 +65,9 @@ export default function Notifications() {
         </div>
       ) : items.length === 0 ? (
         <div className="bg-white rounded-3xl p-12 text-center border border-slate-100">
-          <div className="text-5xl mb-3">🔔✨</div>
+          <div className="w-16 h-16 rounded-3xl bg-blue-50 text-blue-500 flex items-center justify-center mx-auto mb-3 shadow-inner">
+            <Bell className="w-8 h-8" />
+          </div>
           <h4 className="text-base font-bold text-slate-700">Tidak ada notifikasi</h4>
           <p className="text-xs text-slate-400 mt-1">Semua pesan dan pengingat sudah kamu baca.</p>
         </div>

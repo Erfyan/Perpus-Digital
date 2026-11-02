@@ -76,32 +76,40 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <span className="bg-white/15 text-indigo-300 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-xs">
-            Administrator Utama Sistem
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-black mt-2 tracking-tight">
-            Dashboard Pengendalian Perpustakaan
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-300 mt-1">
-            Pengelolaan menyeluruh data master, operasional sirkulasi, laporan literasi, dan keamanan sistem.
-          </p>
-        </div>
+      <div className="relative rounded-3xl overflow-hidden shadow-sm min-h-[140px] flex items-center border border-slate-800">
+        <img
+          src="/img/Banner-panjang.jpg"
+          alt="Banner Admin Perpustakaan"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-indigo-950/90 to-slate-900/60" />
+        <div className="relative z-10 p-6 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
+          <div>
+            <span className="bg-white/15 text-indigo-300 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-xs">
+              Administrator Utama Sistem
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black mt-2 tracking-tight drop-shadow-sm">
+              Dashboard Pengendalian Perpustakaan
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 mt-1">
+              Pengelolaan menyeluruh data master, operasional sirkulasi, laporan literasi, dan keamanan sistem.
+            </p>
+          </div>
 
-        <div className="flex items-center gap-2">
-          <Link
-            to="/admin/reports"
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs px-4 py-2.5 rounded-2xl flex items-center gap-1.5 shadow-sm transition-all"
-          >
-            <BarChart3 className="w-4 h-4" /> Buka Laporan
-          </Link>
-          <Link
-            to="/admin/backup"
-            className="bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs px-4 py-2.5 rounded-2xl flex items-center gap-1.5 backdrop-blur-xs transition-all"
-          >
-            <Database className="w-4 h-4" /> Backup DB
-          </Link>
+          <div className="flex items-center gap-2 shrink-0">
+            <Link
+              to="/admin/reports"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs px-4 py-2.5 rounded-2xl flex items-center gap-1.5 shadow-sm transition-all"
+            >
+              <BarChart3 className="w-4 h-4" /> Buka Laporan
+            </Link>
+            <Link
+              to="/admin/backup"
+              className="bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs px-4 py-2.5 rounded-2xl flex items-center gap-1.5 backdrop-blur-xs transition-all border border-white/20"
+            >
+              <Database className="w-4 h-4" /> Backup DB
+            </Link>
+          </div>
         </div>
       </div>
 

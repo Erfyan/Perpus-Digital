@@ -14,7 +14,8 @@ import {
   Trophy,
   CheckCircle2,
   Bookmark,
-  Volume2
+  Volume2,
+  Lightbulb
 } from 'lucide-react';
 
 export default function Reader() {
@@ -229,7 +230,7 @@ export default function Reader() {
                     Hari ini adalah hari yang cerah untuk membaca. Di sekolah, Andi dan kawan-kawan sangat senang membuka lembaran buku cerita di perpustakaan. Setiap cerita membawa petualangan baru yang penuh dengan pelajaran berharga.
                   </p>
                   <div className="bg-sky-50 rounded-xl p-4 my-3 border border-sky-100 flex items-center gap-3">
-                    <div className="text-3xl">💡</div>
+                    <Lightbulb className="w-8 h-8 text-amber-500 shrink-0" />
                     <div className="text-xs text-sky-900 font-sans">
                       <p className="font-bold">Tahukah Kamu?</p>
                       <p>Membaca 15 menit setiap hari dapat menambah ribuan kosakata baru dan membuat pikiran kita makin kreatif!</p>
@@ -253,10 +254,12 @@ export default function Reader() {
         {showCelebration && (
           <div className="absolute inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 z-30 animate-fade-in">
             <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-sm text-center shadow-2xl border border-amber-200">
-              <div className="w-16 h-16 rounded-full bg-amber-100 text-amber-500 flex items-center justify-center mx-auto text-3xl mb-3 shadow-inner">
-                🏆
+              <div className="w-16 h-16 rounded-full bg-amber-100 text-amber-500 flex items-center justify-center mx-auto mb-3 shadow-inner">
+                <Trophy className="w-8 h-8 text-amber-500" />
               </div>
-              <h3 className="text-lg font-black text-slate-800">Hebat Sekali! 🎉</h3>
+              <h3 className="text-lg font-black text-slate-800 flex items-center justify-center gap-1.5">
+                Hebat Sekali! <Sparkles className="w-5 h-5 text-amber-400 fill-amber-400" />
+              </h3>
               <p className="text-xs text-slate-600 mt-1">
                 Kamu telah menyelesaikan membaca buku <strong>{book.title}</strong> sampai halaman terakhir!
               </p>
