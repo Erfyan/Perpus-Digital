@@ -23,7 +23,8 @@ import {
   Library,
   BookmarkCheck,
   Building2,
-  User
+  User,
+  AlertCircle
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -31,8 +32,11 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
+    setError(null);
     api
       .get('/dashboard/student')
       .then((r) => {
@@ -40,11 +44,12 @@ export default function Dashboard() {
       })
       .catch((err) => {
         console.error('Gagal mengambil data dashboard:', err);
+        setError(err.response?.data?.message || 'Gagal memuat data dari server');
       })
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading || !data) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-3">
@@ -54,6 +59,26 @@ export default function Dashboard() {
       </div>
     );
   }
+
+  if (error && !data) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-6 bg-white rounded-3xl border border-slate-100 shadow-xs max-w-md mx-auto my-12">
+        <div className="w-16 h-16 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center mb-3">
+          <AlertCircle className="w-8 h-8" />
+        </div>
+        <h3 className="text-base font-bold text-slate-800">Gagal Memuat Dashboard</h3>
+        <p className="text-xs text-slate-400 mt-1">{error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-4 px-5 py-2.5 bg-blue-600 text-white font-bold text-xs rounded-xl hover:bg-blue-700 transition-colors shadow-xs"
+        >
+          Coba Muat Ulang
+        </button>
+      </div>
+    );
+  }
+
+  if (!data) return null;
 
   // Map category visual icons and theme colors
   const getCategoryTheme = (name) => {
@@ -100,8 +125,8 @@ export default function Dashboard() {
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-blue-950/80 to-blue-900/30" />
 
         {/* Banner Content */}
-        <div className="relative z-10 p-6 sm:p-8 max-w-xl text-white">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/30 border border-blue-400/40 text-blue-200 text-xs font-bold backdrop-blur-xs mb-2.5">
+        <div className="relative z-1 p-6 sm:p-8 max-w-xl text-white">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/30 border border-blue-400/40 text-blue-200 text-xs font-bold mb-2.5">
             <Sparkles className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
             <span>Perpustakaan Digital Ramah Anak</span>
           </div>
@@ -200,7 +225,7 @@ export default function Dashboard() {
 
           <div className="flex items-center gap-3.5">
             <div className="w-14 sm:w-16 shadow-md rounded-xl overflow-hidden shrink-0">
-              <BookCover title={primaryRead.title} category={primaryRead.category_name} />
+              <BookCover title={primaryRead.title} category={primaryRead.category_name} coverPath={primaryRead.cover_path} />
             </div>
             <div className="flex-1 min-w-0">
               <h4 className="font-extrabold text-sm text-white truncate">
@@ -266,7 +291,7 @@ export default function Dashboard() {
                   key={book.id}
                   className="min-w-[145px] w-[145px] sm:min-w-0 sm:w-auto snap-start shrink-0 sm:shrink bg-white rounded-2xl border border-slate-100 p-2.5 flex flex-col justify-between hover:shadow-md transition-all group"
                 >
-                  <BookCover title={book.title} category={book.category_name} />
+                  <BookCover title={book.title} category={book.category_name} coverPath={book.cover_path} />
                   <div className="mt-2.5 flex-1 flex flex-col justify-between">
                     <div>
                       <h4
@@ -327,7 +352,7 @@ export default function Dashboard() {
                   key={book.id}
                   className="min-w-[145px] w-[145px] sm:min-w-0 sm:w-auto snap-start shrink-0 sm:shrink bg-white rounded-2xl border border-slate-100 p-2.5 flex flex-col justify-between hover:shadow-md transition-all group"
                 >
-                  <BookCover title={book.title} category={book.category_name} />
+                  <BookCover title={book.title} category={book.category_name} coverPath={book.cover_path} />
                   <div className="mt-2.5">
                     <h4
                       className="text-xs font-bold text-slate-800 line-clamp-1 group-hover:text-blue-600 transition-colors"
@@ -446,7 +471,7 @@ export default function Dashboard() {
               <div>
                 <div className="flex gap-3.5 items-center">
                   <div className="w-20 shrink-0">
-                    <BookCover title={primaryRead.title} category={primaryRead.category_name} />
+                    <BookCover title={primaryRead.title} category={primaryRead.category_name} coverPath={primaryRead.cover_path} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="text-xs font-extrabold text-slate-800 line-clamp-1">
@@ -550,7 +575,7 @@ export default function Dashboard() {
                 data.history.slice(0, 3).map((item, idx) => (
                   <div key={idx} className="flex items-center gap-3">
                     <div className="w-10 shrink-0">
-                      <BookCover title={item.title} className="!p-1" />
+                      <BookCover title={item.title} category={item.category_name} coverPath={item.cover_path} className="!p-1" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-baseline">

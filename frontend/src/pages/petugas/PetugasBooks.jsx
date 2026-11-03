@@ -260,7 +260,7 @@ export default function PetugasBooks() {
                     <td className="py-3">
                       <div className="flex items-center gap-3">
                         <div className="w-10 shrink-0">
-                          <BookCover title={b.title} category={b.category_name} className="!p-1" />
+                          <BookCover title={b.title} category={b.category_name} coverPath={b.cover_path} className="!p-1" />
                         </div>
                         <div>
                           <p className="font-extrabold text-slate-800 line-clamp-1">{b.title}</p>

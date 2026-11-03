@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BookOpen,
   Sparkles,
@@ -12,6 +12,76 @@ import {
   Footprints,
   Rocket
 } from 'lucide-react';
+
+// Pemetaan langsung Judul -> File Foto di frontend/public/book_cover/
+// Menjamin foto PASTI tampil saat website dibuka, baik database sudah diseed maupun belum!
+const TITLE_TO_COVER = {
+  // 50 Judul Buku Baru Sesuai File
+  'Aku Anak Pemberani, Aku Anak Mandiri': 'Aku Anak Pemberani, Aku Anak Mandiri.jpg',
+  'Aku Pandai Membaca': 'Aku Pandai Membaca.jpg',
+  'Ayo Mengenal Tata Surya': 'Ayo Mengenal Tata Surya.jpg',
+  'Ayo Menggambar dan Mewarnai': 'Ayo Menggambar dan Mewarnai.jpg',
+  'Bangun Datar dan Bangun Ruang': 'Bangun Datar dan bangun Ruang.jpg',
+  'Bangun Datar dan bangun Ruang': 'Bangun Datar dan bangun Ruang.jpg',
+  'Bawang Merah Bawang Putih': 'Bawang Merah Bawang Putih.jpg',
+  'Belajar Coding untuk Anak': 'Belajar Coding untuk Anak.jpg',
+  'Belajar Huruf dan Suku Kata': 'Belajar Huruf dan Suku Kata.jpg',
+  'Belajar Origami': 'Belajar Origami.jpg',
+  'Belajar Uang dan Menabung': 'Belajar Uang dan Menabung.jpg',
+  'Berani Berkata Tidak': 'Berani Berkata Tidak.jpg',
+  'Berhitung Bersama si Kelinci': 'Berhitung Bersama si Kelinci.jpg',
+  'Bijak Menggunakan Internet': 'Bijak Menggunakan Internet.jpg',
+  'Cerita Rakyat dari Sulawesi': 'Cerita Rakyat dari Sulawesi.jpg',
+  'Dunia Serangga Mini': 'Dunia Serangga Mini.jpg',
+  'Gunung Berapi dan Gempa Bumi': 'Gunung Berapi dan Gempa Bumi.jpg',
+  'Hewan Langka Indonesia': 'Hewan Langka Indonesia.jpg',
+  'Kebudayaan dan Rumah Adat Nusantara': 'Kebudayaan dan Rumah Adat Nusantara.jpg',
+  'Kerajaan-kerajaan di Nusantara': 'Kerajaan-kerajaan di Nusantara.jpg',
+  'Kerajinan dari Barang Bekas': 'Kerajinan dari Barang Bekas.jpg',
+  'Kisah Anak Jujur': 'Kisah Anak Jujur.jpg',
+  'Kisah Si Pitung': 'Kisah Si Pitung.jpg',
+  'Kisah Tokoh Dunia yang Menginspirasi': 'Kisah Tokoh Dunia yang Menginspirasi.jpg',
+  'Laut Kita yang Kaya': 'Laut Kita yang Kaya.jpg',
+  'Legenda Danau Toba': 'Legenda Danau Toba.jpg',
+  "Let's Speak English": "Let's Speak English.jpg",
+  'Makan Sehat Tumbuh Kuat': 'Makan Sehat Tumbuh Kuat.jpg',
+  'Malin Kundang Belajar Menyesal': 'Malin Kundang Belajar Menyesal.jpg',
+  'Mencuci Tangan itu Penting': 'Mencuci Tangan itu Penting.jpg',
+  'Mengapa Langit Berwarna Biru': 'Mengapa Langit Berwarna Biru.jpg',
+  'Mengenal 38 Provinsi Indonesia': 'Mengenal 38 Provinsi Indonesia.jpg',
+  'Mengenal Alat Musik Tradisional': 'Mengenal Alat Musik Tradisional.jpg',
+  'Menulis Cerita Pertamaku': 'Menulis Cerita Pertamaku.jpg',
+  'My First English Words': 'My First English Words.jpg',
+  'Pakaian dan Tarian Daerah': 'Pakaian dan Tarian Daerah.jpg',
+  'Pasar Tradisional di Kotaku': 'Pasar Tradisional di Kotaku.jpg',
+  'Pecahan itu Mudah': 'Pecahan itu Mudah.jpg',
+  'Percobaan Sains Seru di Rumah': 'Percobaan Sains Seru di Rumah.jpg',
+  'Perjalanan Setetes Air': 'Perjalanan Setetes Air.jpg',
+  'Profesi di Sekitar Kita': 'Profesi di Sekitar Kita.jpg',
+  'Proklamasi Kemerdekaan Kita': 'Proklamasi Kemerdekaan Kita.jpg',
+  'Puisi untuk Ibu Pertiwi': 'Puisi untuk Ibu Pertiwi.jpg',
+  'Rahasia Tumbuhan Hijau': 'Rahasia Tumbuhan Hijau.jpg',
+  'Robot, Mesin, dan Masa Depan': 'Robot, Mesin, dan Masa Depan.jpg',
+  'Sahabat Hutan Kalimantan': 'Sahabat Hutan Kalimantan.jpg',
+  'Sangkuriang dan Perahu Raksasa': 'Sangkuriang dan Perahu Raksasa.jpg',
+  'Siaga Bencana untuk Anak': 'Siaga Bencana untuk Anak.jpg',
+  'Sopan Santun di Mana Saja': 'Sopan Santun di Mana Saja.jpg',
+  'Teka-teki Logika Seru': 'Teka-teki Logika Seru.jpg',
+  'Timun Mas dan Raksasa': 'Timun Mas dan Raksasa.jpg',
+
+  // Fallback untuk 11 Judul Lama (jika database belum direset/reseed)
+  'Dongeng Nusantara': 'Bawang Merah Bawang Putih.jpg',
+  'Sains di Sekitarku': 'Percobaan Sains Seru di Rumah.jpg',
+  'Matematika Menyenangkan': 'Pecahan itu Mudah.jpg',
+  'Ayo Jaga Lingkungan': 'Sahabat Hutan Kalimantan.jpg',
+  'Komik Pahlawan Indonesia': 'Proklamasi Kemerdekaan Kita.jpg',
+  'Matematika Kelas 4 SD': 'Bangun Datar dan bangun Ruang.jpg',
+  'Petualangan Si Kancil': 'Berhitung Bersama si Kelinci.jpg',
+  'Tubuh Manusia untuk Anak': 'Makan Sehat Tumbuh Kuat.jpg',
+  'Aku Bisa Menjaga Diri': 'Berani Berkata Tidak.jpg',
+  'Ensiklopedia Hewan': 'Hewan Langka Indonesia.jpg',
+  'Cita-Citaku': 'Kisah Tokoh Dunia yang Menginspirasi.jpg',
+};
 
 const COVER_THEMES = {
   'Dongeng Nusantara': { bg: 'from-amber-400 to-emerald-600', icon: Landmark, badge: 'Cerita' },
@@ -27,7 +97,26 @@ const COVER_THEMES = {
   'Cita-Citaku': { bg: 'from-indigo-500 to-purple-800', icon: Rocket, badge: 'Inspirasi' },
 };
 
-export default function BookCover({ title = 'Buku Digital', category = '', className = '' }) {
+export default function BookCover({
+  title = 'Buku Digital',
+  category = '',
+  className = '',
+  coverPath = '',
+  coverUrl = '',
+}) {
+  const [imageError, setImageError] = useState(false);
+
+  // Cari path gambar: dari prop coverPath/coverUrl, atau fallback ke pemetaan judul TITLE_TO_COVER
+  let rawSrc = coverPath || coverUrl;
+  if (!rawSrc && title && TITLE_TO_COVER[title]) {
+    rawSrc = `/book_cover/${TITLE_TO_COVER[title]}`;
+  }
+
+  // Jika berupa nama file saja (tanpa awalan /book_cover/ atau http)
+  if (rawSrc && !rawSrc.startsWith('/') && !rawSrc.startsWith('http') && !rawSrc.startsWith('data:')) {
+    rawSrc = `/book_cover/${rawSrc}`;
+  }
+
   const theme = COVER_THEMES[title] || {
     bg: 'from-blue-500 to-sky-700',
     icon: BookOpen,
@@ -36,6 +125,24 @@ export default function BookCover({ title = 'Buku Digital', category = '', class
 
   const IconComponent = theme.icon || BookOpen;
 
+  // Jika ada foto dan tidak error, tampilkan foto sampul asli
+  if (rawSrc && !imageError) {
+    return (
+      <div className={`relative rounded-xl overflow-hidden shadow-sm aspect-[3/4] bg-slate-100 select-none group ${className}`}>
+        <img
+          src={encodeURI(rawSrc)}
+          alt={title}
+          onError={() => setImageError(true)}
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+        />
+        {/* Efek lekukan tulang buku (book spine shadow) */}
+        <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-r from-black/25 to-transparent pointer-events-none" />
+      </div>
+    );
+  }
+
+  // Fallback desain grafis jika gambar tidak ada/gagal dimuat
   return (
     <div
       className={`relative rounded-xl overflow-hidden shadow-sm aspect-[3/4] flex flex-col justify-between p-2.5 text-white bg-gradient-to-br ${theme.bg} select-none ${className}`}

@@ -49,6 +49,8 @@ export default function Reader() {
       .finally(() => setLoading(false));
   }, [id]);
 
+  const saveTimeoutRef = useRef(null);
+
   const saveProgress = async (page) => {
     try {
       setSaveStatus('Menyimpan posisi baca...');
@@ -68,10 +70,19 @@ export default function Reader() {
     }
   };
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = (newPage, immediate = false) => {
     const validPage = Math.max(1, Math.min(newPage, totalPages));
     setCurrentPage(validPage);
-    saveProgress(validPage);
+
+    if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+
+    if (immediate) {
+      saveProgress(validPage);
+    } else {
+      saveTimeoutRef.current = setTimeout(() => {
+        saveProgress(validPage);
+      }, 500);
+    }
   };
 
   const toggleFullscreen = () => {
@@ -83,6 +94,12 @@ export default function Reader() {
       setIsFullscreen(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    };
+  }, []);
 
   const progressPercentage = Math.round((currentPage / totalPages) * 100);
 
@@ -204,7 +221,7 @@ export default function Reader() {
               /* Title Page / Cover */
               <div className="flex flex-col items-center text-center my-auto space-y-4">
                 <div className="w-36 shadow-md rounded-xl overflow-hidden mb-2">
-                  <BookCover title={book.title} category={book.category_name} />
+                  <BookCover title={book.title} category={book.category_name} coverPath={book.cover_path} />
                 </div>
                 <h1 className="text-2xl sm:text-3xl font-black text-slate-800 tracking-tight">
                   {book.title}
@@ -286,7 +303,7 @@ export default function Reader() {
       <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
         {/* Previous Button */}
         <button
-          onClick={() => handlePageChange(currentPage - 1)}
+          onClick={() => handlePageChange(currentPage - 1, true)}
           disabled={currentPage <= 1}
           className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-colors"
         >
@@ -301,7 +318,7 @@ export default function Reader() {
             min={1}
             max={totalPages}
             value={currentPage}
-            onChange={(e) => handlePageChange(Number(e.target.value))}
+            onChange={(e) => handlePageChange(Number(e.target.value), false)}
             className="flex-1 accent-blue-600 cursor-pointer"
           />
           <div className="text-xs font-bold text-slate-700 shrink-0">
@@ -311,7 +328,7 @@ export default function Reader() {
 
         {/* Next Button */}
         <button
-          onClick={() => handlePageChange(currentPage + 1)}
+          onClick={() => handlePageChange(currentPage + 1, true)}
           disabled={currentPage >= totalPages}
           className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-5 py-2 rounded-xl text-xs font-bold bg-[#1E74FD] hover:bg-blue-700 text-white disabled:opacity-40 disabled:pointer-events-none shadow-xs transition-colors"
         >

@@ -75,7 +75,7 @@ export default function Favorites() {
               className="bg-white rounded-2xl border border-slate-100 p-3 flex flex-col justify-between hover:shadow-md transition-all group"
             >
               <div>
-                <BookCover title={b.title} category={b.category_name} />
+                <BookCover title={b.title} category={b.category_name} coverPath={b.cover_path} />
                 <div className="mt-3">
                   <span className="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full inline-block">
                     {b.category_name || 'Cerita'}

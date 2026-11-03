@@ -299,7 +299,7 @@ export default function Layout() {
         </header>
 
         {/* B. TABLET & DESKTOP TOP HEADER (>= md) */}
-        <header className="hidden md:flex bg-white/80 backdrop-blur-md sticky top-0 z-10 px-6 py-3.5 items-center justify-between gap-4 border-b border-slate-100 shadow-2xs">
+        <header className="hidden md:flex bg-white/95 backdrop-blur-md sticky top-0 z-50 px-6 py-3.5 items-center justify-between gap-4 border-b border-slate-100 shadow-2xs">
           {/* SEARCH BAR */}
           <form onSubmit={handleSearch} className="flex-1 max-w-xl">
             <div className="relative flex items-center">
@@ -330,7 +330,7 @@ export default function Layout() {
             )}
 
             {/* Profile Dropdown */}
-            <div className="relative">
+            <div className="relative z-50">
               <button
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="flex items-center gap-3 p-1.5 pr-3 rounded-full hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100"
@@ -356,47 +356,54 @@ export default function Layout() {
               </button>
 
               {profileOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-30 animate-in fade-in zoom-in-95 duration-150">
-                  <div className="px-4 py-2 border-b border-slate-100">
-                    <p className="text-xs font-bold text-slate-800">
-                      {student?.full_name || user?.username}
-                    </p>
-                    <p className="text-[11px] text-slate-500 uppercase">
-                      {user?.role}
-                    </p>
+                <>
+                  {/* Backdrop transparan untuk menutup dropdown saat klik di luar */}
+                  <div
+                    className="fixed inset-0 z-50"
+                    onClick={() => setProfileOpen(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-2xl border border-slate-100 py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+                    <div className="px-4 py-2 border-b border-slate-100">
+                      <p className="text-xs font-bold text-slate-800">
+                        {student?.full_name || user?.username}
+                      </p>
+                      <p className="text-[11px] text-slate-500 uppercase">
+                        {user?.role}
+                      </p>
+                    </div>
+                    {user?.role === 'siswa' && (
+                      <>
+                        <NavLink
+                          to="/profile"
+                          onClick={() => setProfileOpen(false)}
+                          className="w-full px-4 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                        >
+                          <User className="w-4 h-4 text-slate-400" />
+                          Profil Saya
+                        </NavLink>
+                        <NavLink
+                          to="/settings"
+                          onClick={() => setProfileOpen(false)}
+                          className="w-full px-4 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                        >
+                          <Settings className="w-4 h-4 text-slate-400" />
+                          Pengaturan
+                        </NavLink>
+                      </>
+                    )}
+                    <div className="border-t border-slate-100 my-1" />
+                    <button
+                      onClick={() => {
+                        setProfileOpen(false);
+                        handleLogout();
+                      }}
+                      className="w-full px-4 py-2 text-left text-xs font-semibold text-rose-500 hover:bg-rose-50 flex items-center gap-2"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Keluar
+                    </button>
                   </div>
-                  {user?.role === 'siswa' && (
-                    <>
-                      <NavLink
-                        to="/profile"
-                        onClick={() => setProfileOpen(false)}
-                        className="w-full px-4 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                      >
-                        <User className="w-4 h-4 text-slate-400" />
-                        Profil Saya
-                      </NavLink>
-                      <NavLink
-                        to="/settings"
-                        onClick={() => setProfileOpen(false)}
-                        className="w-full px-4 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                      >
-                        <Settings className="w-4 h-4 text-slate-400" />
-                        Pengaturan
-                      </NavLink>
-                    </>
-                  )}
-                  <div className="border-t border-slate-100 my-1" />
-                  <button
-                    onClick={() => {
-                      setProfileOpen(false);
-                      handleLogout();
-                    }}
-                    className="w-full px-4 py-2 text-left text-xs font-semibold text-rose-500 hover:bg-rose-50 flex items-center gap-2"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Keluar
-                  </button>
-                </div>
+                </>
               )}
             </div>
           </div>

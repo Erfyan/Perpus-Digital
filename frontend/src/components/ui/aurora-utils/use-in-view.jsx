@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 
 /**
  * Lightweight hook that reports whether the observed element is in the viewport.
@@ -21,6 +21,12 @@ export function useInView(options = {}) {
 
       if (!node) return;
 
+      // Fallback if IntersectionObserver is not supported
+      if (typeof window === 'undefined' || typeof window.IntersectionObserver === 'undefined') {
+        setInView(true);
+        return;
+      }
+
       const observer = new IntersectionObserver(
         ([entry]) => {
           setInView(entry.isIntersecting);
@@ -34,6 +40,13 @@ export function useInView(options = {}) {
     [rootMargin, threshold]
   );
 
+  useEffect(() => {
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
+
   return [observe, inView];
 }
-

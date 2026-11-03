@@ -60,9 +60,9 @@ export default function PetugasDashboard() {
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-950/95 via-indigo-950/90 to-blue-900/50" />
-        <div className="relative z-10 p-6 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
+        <div className="relative z-1 p-6 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
           <div>
-            <span className="bg-white/20 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-xs">
+            <span className="bg-white/20 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
               Panel Operasional Petugas Perpustakaan
             </span>
             <h2 className="text-2xl sm:text-3xl font-black mt-2 tracking-tight drop-shadow-sm">

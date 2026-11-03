@@ -45,7 +45,7 @@ export default function MyLoans() {
   };
 
   const getStatusBadge = (status, dueDate) => {
-    const isOverdue = new Date(dueDate) < new Date() && status === 'dipinjam';
+    const isOverdue = Boolean(dueDate && new Date(dueDate) < new Date() && status === 'dipinjam');
     if (status === 'dikembalikan') {
       return (
         <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 shrink-0">
@@ -164,7 +164,7 @@ export default function MyLoans() {
               >
                 <div className="flex items-start sm:items-center gap-4">
                   <div className="w-14 sm:w-16 shrink-0">
-                    <BookCover title={item.book_title || 'Buku Fisik'} category={item.category_name} />
+                    <BookCover title={item.book_title || 'Buku Fisik'} category={item.category_name} coverPath={item.cover_path} />
                   </div>
                   <div>
                     {/* Header Peminjam & Kode */}

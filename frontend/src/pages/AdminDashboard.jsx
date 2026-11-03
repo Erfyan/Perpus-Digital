@@ -83,9 +83,9 @@ export default function AdminDashboard() {
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-indigo-950/90 to-slate-900/60" />
-        <div className="relative z-10 p-6 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
+        <div className="relative z-1 p-6 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
           <div>
-            <span className="bg-white/15 text-indigo-300 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-xs">
+            <span className="bg-white/15 text-indigo-300 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
               Administrator Utama Sistem
             </span>
             <h2 className="text-2xl sm:text-3xl font-black mt-2 tracking-tight drop-shadow-sm">
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
             </Link>
             <Link
               to="/admin/backup"
-              className="bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs px-4 py-2.5 rounded-2xl flex items-center gap-1.5 backdrop-blur-xs transition-all border border-white/20"
+              className="bg-white/15 hover:bg-white/25 text-white font-extrabold text-xs px-4 py-2.5 rounded-2xl flex items-center gap-1.5 transition-all border border-white/20"
             >
               <Database className="w-4 h-4" /> Backup DB
             </Link>

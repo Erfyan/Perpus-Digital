@@ -6,8 +6,11 @@ import { cn } from '@/lib/utils';
 function mergeRefs(...refs) {
   return (node) => {
     for (const ref of refs) {
-      if (typeof ref === 'function') ref(node);
-      else if (ref) ref.current = node;
+      if (typeof ref === 'function') {
+        ref(node);
+      } else if (ref && typeof ref === 'object' && 'current' in ref) {
+        ref.current = node;
+      }
     }
   };
 }
@@ -37,6 +40,7 @@ function Aurora({
   className,
   children,
   ref,
+  style,
   ...props
 }) {
   const [observe, inView] = useInView({ rootMargin: '200px' });
@@ -47,6 +51,7 @@ function Aurora({
       ref={mergedRef}
       data-slot="aurora"
       className={cn('relative overflow-hidden', className)}
+      style={style}
       {...props}
     >
       <div
@@ -62,7 +67,7 @@ function Aurora({
             style={{
               left: light.left,
               top: light.top,
-              background: `radial-gradient(closest-side, ${colors[index]}, transparent)`,
+              background: `radial-gradient(closest-side, ${colors[index] || colors[0]}, transparent)`,
               opacity: intensity,
               animationDuration: `${duration * light.pace}s`,
               animationDelay: `${duration * light.start}s`,
@@ -77,4 +82,3 @@ function Aurora({
 }
 
 export default Aurora;
-

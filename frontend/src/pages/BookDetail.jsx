@@ -65,13 +65,14 @@ export default function BookDetail() {
       const response = await api.get(`/digital-books/${book.digital.id}/download`, {
         responseType: 'blob',
       });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const blobUrl = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
-      link.href = url;
+      link.href = blobUrl;
       link.setAttribute('download', `${book.title}.pdf`);
       document.body.appendChild(link);
       link.click();
       link.remove();
+      window.URL.revokeObjectURL(blobUrl);
       setDownloadMsg('Buku berhasil diunduh!');
       setTimeout(() => setDownloadMsg(''), 4000);
     } catch (err) {
@@ -117,7 +118,7 @@ export default function BookDetail() {
         {/* Cover Column */}
         <div className="w-full md:w-64 shrink-0 flex flex-col items-center">
           <div className="w-48 sm:w-56 shadow-lg rounded-2xl overflow-hidden transform hover:scale-[1.02] transition-transform">
-            <BookCover title={book.title} category={book.category_name} />
+            <BookCover title={book.title} category={book.category_name} coverPath={book.cover_path} />
           </div>
 
           <div className="mt-4 flex items-center gap-1.5 text-amber-500 font-extrabold text-sm">
