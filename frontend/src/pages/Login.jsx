@@ -1,15 +1,27 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { BookOpen, Sparkles, User, Lock, ArrowRight, ShieldCheck, Library, UserCheck, Shield, GraduationCap } from 'lucide-react';
+import {
+  Sparkles,
+  User,
+  Lock,
+  ArrowRight,
+  Info,
+  Eye,
+  EyeOff,
+  Shield,
+  UserCheck,
+  GraduationCap
+} from 'lucide-react';
 import Aurora from '@/components/ui/aurora';
 
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('petugas');
-  const [password, setPassword] = useState('petugas123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +30,7 @@ export default function Login() {
     setError('');
     setLoading(true);
     try {
-      const data = await login(username, password);
+      const data = await login(username.trim(), password);
       const role = data.user?.role;
       if (role === 'petugas') {
         navigate('/petugas');
@@ -34,9 +46,10 @@ export default function Login() {
     }
   };
 
-  const handleQuickLogin = (u, p) => {
+  const fillDemoAccount = (u, p) => {
     setUsername(u);
     setPassword(p);
+    setError('');
   };
 
   return (
@@ -61,61 +74,14 @@ export default function Login() {
             <Sparkles className="w-4 h-4 text-amber-400 fill-amber-400" />
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">
-            Masuk ke sistem perpustakaan digital sekolah dasar
+            Masuk dengan akun pengguna Anda untuk melanjutkan
           </p>
         </div>
 
-        {/* Quick User Presets for Testing / Demo */}
-        <div className="mb-6 bg-slate-50 p-3 rounded-2xl border border-slate-100">
-          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">
-            Pilih Cepat Akun Uji Coba
-          </p>
-          <div className="grid grid-cols-3 gap-2">
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('petugas', 'petugas123')}
-              className={`p-2 rounded-xl text-center border transition-all flex flex-col items-center justify-center ${
-                username === 'petugas'
-                  ? 'bg-blue-600 text-white font-bold border-blue-600 shadow-xs'
-                  : 'bg-white text-slate-700 font-medium hover:bg-slate-100 border-slate-200'
-              }`}
-            >
-              <UserCheck className="w-5 h-5 mx-auto" />
-              <p className="text-[10px] mt-1 truncate font-bold">Petugas</p>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('andi', 'siswa123')}
-              className={`p-2 rounded-xl text-center border transition-all flex flex-col items-center justify-center ${
-                username === 'andi'
-                  ? 'bg-blue-600 text-white font-bold border-blue-600 shadow-xs'
-                  : 'bg-white text-slate-700 font-medium hover:bg-slate-100 border-slate-200'
-              }`}
-            >
-              <GraduationCap className="w-5 h-5 mx-auto" />
-              <p className="text-[10px] mt-1 truncate font-bold">Andi (Siswa)</p>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('admin', 'admin123')}
-              className={`p-2 rounded-xl text-center border transition-all flex flex-col items-center justify-center ${
-                username === 'admin'
-                  ? 'bg-blue-600 text-white font-bold border-blue-600 shadow-xs'
-                  : 'bg-white text-slate-700 font-medium hover:bg-slate-100 border-slate-200'
-              }`}
-            >
-              <Shield className="w-5 h-5 mx-auto" />
-              <p className="text-[10px] mt-1 truncate font-bold">Admin</p>
-            </button>
-          </div>
-        </div>
-
-        {/* Form Login */}
+        {/* Form Login (Standard Tanpa Pemilihan Role) */}
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="p-3 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 text-xs font-bold text-center">
+            <div className="p-3 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 text-xs font-bold text-center animate-in fade-in duration-200">
               {error}
             </div>
           )}
@@ -132,7 +98,8 @@ export default function Login() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Masukkan username"
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-500 focus:bg-white focus:ring-3 focus:ring-blue-100 transition-all font-medium"
+                autoComplete="username"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-500 focus:bg-white focus:ring-3 focus:ring-blue-100 transition-all font-medium placeholder:text-slate-400"
               />
             </div>
           </div>
@@ -144,23 +111,35 @@ export default function Login() {
             <div className="relative flex items-center">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none" />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Masukkan kata sandi"
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-500 focus:bg-white focus:ring-3 focus:ring-blue-100 transition-all font-medium"
+                autoComplete="current-password"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-10 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-500 focus:bg-white focus:ring-3 focus:ring-blue-100 transition-all font-medium placeholder:text-slate-400"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3.5 text-slate-400 hover:text-slate-600 transition-colors p-0.5"
+                title={showPassword ? 'Sembunyikan password' : 'Tampilkan password'}
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
             </div>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#1E74FD] hover:bg-blue-700 text-white font-extrabold text-sm py-3 rounded-2xl flex items-center justify-center gap-2 shadow-md shadow-blue-200 transition-all hover:scale-[1.01] disabled:opacity-50"
+            className="w-full bg-[#1E74FD] hover:bg-blue-700 text-white font-extrabold text-sm py-3 rounded-2xl flex items-center justify-center gap-2 shadow-md shadow-blue-200 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
           >
             {loading ? (
-              'Sedang Memproses...'
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <span>Sedang Memproses...</span>
+              </div>
             ) : (
               <>
                 <span>Masuk Sekarang</span>
@@ -170,7 +149,86 @@ export default function Login() {
           </button>
         </form>
 
-        <div className="mt-6 text-center text-xs text-slate-400 font-medium">
+        {/* Note Informasi Akun Demo yang Sudah Terdaftar */}
+        <div className="mt-6 pt-5 border-t border-slate-100">
+          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-3.5">
+            <div className="flex items-center gap-2 mb-2.5 text-slate-700 font-extrabold text-xs">
+              <Info className="w-4 h-4 text-blue-600 shrink-0" />
+              <span>Catatan Akun Demo Terdaftar</span>
+            </div>
+            
+            <div className="space-y-1.5">
+              {/* Demo Admin */}
+              <button
+                type="button"
+                onClick={() => fillDemoAccount('admin', 'admin123')}
+                title="Klik untuk gunakan akun Admin"
+                className="w-full text-left flex items-center justify-between bg-white hover:bg-blue-50/60 p-2 rounded-xl border border-slate-200/60 transition-colors group cursor-pointer"
+              >
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="w-6 h-6 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                    <Shield className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-bold text-slate-800 leading-tight">Admin Sistem</p>
+                    <p className="text-[10px] text-slate-400">username: <code className="text-indigo-600 font-semibold font-mono">admin</code></p>
+                  </div>
+                </div>
+                <span className="text-[10px] font-mono text-slate-500 bg-slate-100 group-hover:bg-blue-100 group-hover:text-blue-700 px-2 py-0.5 rounded-md font-semibold transition-colors">
+                  admin123
+                </span>
+              </button>
+
+              {/* Demo Petugas */}
+              <button
+                type="button"
+                onClick={() => fillDemoAccount('petugas', 'petugas123')}
+                title="Klik untuk gunakan akun Petugas"
+                className="w-full text-left flex items-center justify-between bg-white hover:bg-blue-50/60 p-2 rounded-xl border border-slate-200/60 transition-colors group cursor-pointer"
+              >
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <UserCheck className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-bold text-slate-800 leading-tight">Petugas Perpustakaan</p>
+                    <p className="text-[10px] text-slate-400">username: <code className="text-blue-600 font-semibold font-mono">petugas</code></p>
+                  </div>
+                </div>
+                <span className="text-[10px] font-mono text-slate-500 bg-slate-100 group-hover:bg-blue-100 group-hover:text-blue-700 px-2 py-0.5 rounded-md font-semibold transition-colors">
+                  petugas123
+                </span>
+              </button>
+
+              {/* Demo Siswa */}
+              <button
+                type="button"
+                onClick={() => fillDemoAccount('andi', '123456')}
+                title="Klik untuk gunakan akun Siswa"
+                className="w-full text-left flex items-center justify-between bg-white hover:bg-blue-50/60 p-2 rounded-xl border border-slate-200/60 transition-colors group cursor-pointer"
+              >
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                    <GraduationCap className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-bold text-slate-800 leading-tight">Siswa (Andi Pratama)</p>
+                    <p className="text-[10px] text-slate-400">username: <code className="text-emerald-600 font-semibold font-mono">andi</code></p>
+                  </div>
+                </div>
+                <span className="text-[10px] font-mono text-slate-500 bg-slate-100 group-hover:bg-blue-100 group-hover:text-blue-700 px-2 py-0.5 rounded-md font-semibold transition-colors">
+                  123456
+                </span>
+              </button>
+            </div>
+
+            <p className="text-[10px] text-slate-400 mt-2 text-center leading-tight">
+              Hak akses dan role otomatis diarahkan oleh sistem setelah berhasil masuk.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-5 text-center text-[11px] text-slate-400 font-medium">
           Perpustakaan Digital Ramah Anak • Sekolah Dasar
         </div>
       </div>
